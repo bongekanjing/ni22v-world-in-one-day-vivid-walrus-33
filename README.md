@@ -5,7 +5,7 @@
 [![reward](https://make.fun/badge/news-image-20261122/bongekanjing/ni22v-world-in-one-day-vivid-walrus-33/reward.svg)](https://make.fun/bounty/news-image-20261122)
 
 One image that sums up the world news of Sunday 22 November 2026: 37 stories
-across 9 regions on a single broadsheet page, dated in the masthead.
+across 9 regions and 20 fields on a single broadsheet page, dated in the masthead.
 
 Entry for [make.fun](https://make.fun/bounty/news-image-20261122)'s
 `news-image-20261122` bounty.
