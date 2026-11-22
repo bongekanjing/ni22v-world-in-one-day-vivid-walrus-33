@@ -225,11 +225,30 @@ DATE_CHECK = (
     "and last week's Kerch bridge strikes."
 )
 
+# What the two status words mean, printed on the sheet so the labels cannot be
+# read as a stronger claim than they are.
+STATUS_KEY = (
+    "CORROBORATED: two or more of the outlets below carried it. "
+    "REPORTED: one outlet carried it. Neither word is a judgment of the truth of a story."
+)
+
 SOURCES = (
     "Sources: Reuters, AP, AFP, Al Jazeera, BBC, Arab News, Africanews, DW, The Straits "
     "Times, ABC Australia, Kyiv Independent, UN OHCHR, ESA. Pictures and map: original, "
     "drawn in code from this file."
 )
+
+
+def status(story):
+    """How well corroborated a story is, from the outlets named on the sheet.
+
+    Two or more outlets carrying the same story is CORROBORATED; one is
+    REPORTED. Nothing here judges truth -- it says only how many of the outlets
+    this page actually read carried the item, which is why the label is derived
+    from the outlet string rather than typed next to the headline.
+    """
+    outlets = [o.strip() for o in (story.get("outlet") or "").split(",") if o.strip()]
+    return "CORROBORATED" if len(outlets) > 1 else "REPORTED"
 
 
 def fields():

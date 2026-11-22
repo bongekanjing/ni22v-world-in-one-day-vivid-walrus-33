@@ -275,8 +275,11 @@ def card_grid(draw, y, height):
         f_place = font(SANS_B, 7)
         tracked(draw, (x + 3, cy), card["place"], f_place, colour, tracking=0.4)
         cy += 10
+        # The beat, then how well it is corroborated -- derived from the outlets
+        # the card names, so the label cannot claim more sourcing than exists.
         f_fld = font(SANS_B, 7)
-        tracked(draw, (x + 3, cy), card["field"], f_fld, RED, tracking=0.5)
+        tag = f"{card['field']} · {stories.status(card)}"
+        tracked(draw, (x + 3, cy), tag, f_fld, RED, tracking=0.5)
         cy += 11
 
         sizes = [fit(draw, ln, SERIF_B, 13, cardw - 6)[1] for ln in card["head"]]
@@ -347,6 +350,11 @@ def footer(draw, y, height):
     f_b = font(SERIF, 8)
     cy = y + 20
     for ln in wrap(draw, stories.DATE_CHECK, f_b, MEASURE - 22)[:2]:
+        draw.text((MARGIN + 9, cy), ln, font=f_b, fill=BODY)
+        cy += f_b.size + 2
+    # The key for the two status words, so the labels are not read as a
+    # stronger claim than the sourcing supports.
+    for ln in wrap(draw, stories.STATUS_KEY, f_b, MEASURE - 22)[:2]:
         draw.text((MARGIN + 9, cy), ln, font=f_b, fill=BODY)
         cy += f_b.size + 2
 
