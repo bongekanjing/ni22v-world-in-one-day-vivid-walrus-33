@@ -149,13 +149,32 @@ def refinery(d, box):
     for i in range(5):
         px = x0 + int(w * (0.08 + i * 0.2))
         d.rectangle([px, y0 + int(h * 0.60), px + int(w * 0.014), y0 + int(h * 0.70)], fill=SLATE)
-    # Jetty into the water.
-    d.rectangle([x0 + int(w * 0.74), y0 + int(h * 0.66), x1, y0 + int(h * 0.70)], fill=SAND)
-    d.polygon([(x0 + int(w * 0.80), y0 + int(h * 0.78)),
-               (x0 + int(w * 0.94), y0 + int(h * 0.78)),
-               (x0 + int(w * 0.91), y0 + int(h * 0.86)),
-               (x0 + int(w * 0.82), y0 + int(h * 0.86))], fill=CRIMSON)
-    d.rectangle([x0, y0 + int(h * 0.75), x1, y1], fill=(30, 42, 56))
+    # Water, then the jetty, then two moored tankers with hulls and deck
+    # houses: at 300 px a ship has to be a ship, not a shape in the water.
+    d.rectangle([x0, y0 + int(h * 0.72), x1, y1], fill=(30, 42, 56))
+    d.rectangle([x0 + int(w * 0.62), y0 + int(h * 0.66), x1, y0 + int(h * 0.725)], fill=SAND)
+
+    def tanker(hx, hw, wl, col):
+        """A hull sitting on the waterline, with a deck house and a mast."""
+        top = y0 + int(h * wl)
+        hull = y0 + int(h * (wl + 0.11))
+        x = x0 + int(w * hx)
+        wid = int(w * hw)
+        # Hull: a long box with the bow cut back at the right.
+        d.polygon([(x, top), (x + wid, top), (x + wid - int(wid * 0.18), hull),
+                   (x, hull)], fill=col)
+        # Waterline stripe.
+        d.rectangle([x, hull - max(2, int(h * 0.018)), x + wid, hull], fill=CRIMSON)
+        # Deck house aft, funnel, and a loading manifold forward.
+        d.rectangle([x + int(wid * 0.04), top - int(h * 0.09),
+                     x + int(wid * 0.26), top], fill=CREAM)
+        d.rectangle([x + int(wid * 0.13), top - int(h * 0.15),
+                     x + int(wid * 0.19), top - int(h * 0.08)], fill=SLATE)
+        d.rectangle([x + int(wid * 0.62), top - int(h * 0.05),
+                     x + int(wid * 0.72), top], fill=STEEL)
+
+    tanker(0.70, 0.27, 0.76, CRIMSON)
+    tanker(0.44, 0.22, 0.84, (150, 96, 74))
     # Fire and smoke over the tanks.
     for i, (fx, fr) in enumerate(((0.38, 0.09), (0.44, 0.13), (0.51, 0.08))):
         cx, cy = x0 + int(w * fx), y0 + int(h * (0.56 - i * 0.02))

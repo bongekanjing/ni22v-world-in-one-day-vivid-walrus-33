@@ -29,14 +29,38 @@ FIGURES = [
     ("2", "spacecraft reach\nMercury at once"),
 ]
 
+# Nine regions, not six. "Europe" as one bucket hid the fact that this day's
+# two biggest wars -- Ukraine's barrage and Moldova's airspace breach -- are in
+# the east; "the Americas" as one bucket put a Seattle airport arrest and a
+# Brazilian supercell under the same heading. Labels are short because the
+# strip is read at 300 px, where a long name becomes a grey smear. Nine is the
+# smallest honest set here: a region carrying one story gets a block about
+# 25 px wide, and a 25 px block cannot hold a label at all -- so Australia is
+# counted with Asia-Pacific, where it belongs on a world page.
 REGIONS = [
     ("EUROPE", "#1f4e79"),
-    ("MIDDLE EAST", "#8c1f2b"),
-    ("AMERICAS", "#2e6b4f"),
-    ("ASIA-PACIFIC", "#b8621b"),
+    ("E. EUROPE", "#2f6f9e"),
+    ("MIDEAST", "#8c1f2b"),
+    ("S. ASIA", "#b8621b"),
+    ("ASIA-PAC", "#c9862a"),
     ("AFRICA", "#7a5230"),
-    ("WORLD", "#5b3d82"),
+    ("LATAM", "#2e6b4f"),
+    ("N. AMER.", "#6b3d7a"),
+    ("WORLD", "#54595f"),
 ]
+
+# Old coarse tag -> finer tag. Applied once to the record tables below, so the
+# stories keep their reporting and only their geography gets more exact.
+SPLIT = {
+    ("EUROPE", "Ukraine"): "E. EUROPE",
+}
+
+_FINER = {
+    # Europe, west and centre
+    "COP31: DEAL ADOPTED": "EUROPE",
+    # Europe, east: the day's active war theatre
+    "UKRAINE: ANOTHER BARRAGE": "E. EUROPE",
+}
 
 LEADS = [
     {
@@ -55,7 +79,7 @@ LEADS = [
     {
         "tag": "UKRAINE: ANOTHER BARRAGE",
         "flag": None,
-        "region": "EUROPE",
+        "region": "E. EUROPE",
         "figure": "150 drones",
         "kicker": "KYIV, UKRAINE · WAR",
         "head": ["Russia sends about 150", "drones over Ukraine"],
@@ -68,11 +92,11 @@ LEADS = [
     {
         "tag": "BAHRAIN: SITE STRUCK",
         "flag": None,
-        "region": "MIDDLE EAST",
+        "region": "MIDEAST",
         "figure": "2 attacks",
         "kicker": "MANAMA, BAHRAIN · IRAN WAR",
         "head": ["Iran hits a Bahraini", "plant; tankers attacked"],
-        "deck": "A civilian industrial site burns with no injuries reported, and two tankers are struck in the Strait of Hormuz.",
+        "deck": "Iran says a civilian site was struck; Bahrain's government reported no injuries. Two tankers were hit in Hormuz, the UK agency says.",
         "outlet": "Al Jazeera, CNA",
         "vignette": "refinery",
         "caption": "Bahrain government",
@@ -86,35 +110,35 @@ CARDS = [
         "num": 4, "tab": "WITHDRAWAL DEMAND", "place": "BEIRUT",
         "head": ["Aoun tells Israel to quit", "and Iran to stop meddling"],
         "deck": "In his Independence Day address he calls the occupation and foreign meddling inseparably linked.",
-        "outlet": "Al Jazeera, MEE", "region": "MIDDLE EAST", "icon": "parliament",
+        "outlet": "Al Jazeera, MEE", "region": "MIDEAST", "icon": "parliament",
         "lat": 33.9, "lon": 35.5,
     },
     {
         "num": 5, "tab": "POWER CUTS", "place": "TEHRAN",
         "head": ["Iran rations electricity", "as war damage bites"],
         "deck": "Rolling cuts of about two hours begin, the grid operator says.",
-        "outlet": "AFP", "region": "MIDDLE EAST", "icon": "pylon",
+        "outlet": "AFP", "region": "MIDEAST", "icon": "pylon",
         "lat": 35.7, "lon": 51.4,
     },
     {
         "num": 6, "tab": "KINGPIN TAKEN", "place": "GUASAVE, MEXICO",
         "head": ["Cartel boss 'El Chapo", "Isidro' is captured"],
-        "deck": "Soldiers seize an FBI top-ten fugitive; 11 die in Sinaloa gun battles.",
-        "outlet": "AP, Reuters", "region": "AMERICAS", "icon": "raid",
+        "deck": "Soldiers seize an FBI top-ten fugitive, state media report; 11 die in Sinaloa gun battles.",
+        "outlet": "AP, Reuters", "region": "LATAM", "icon": "raid",
         "lat": 25.6, "lon": -108.5,
     },
     {
         "num": 7, "tab": "SUPERCELL STORM", "place": "TUPANCIRETA, BRAZIL",
         "head": ["Storm shreds a Brazil", "town in 40 minutes"],
-        "deck": "Four dead, 162 hurt and 8,000 homes damaged as 114km/h winds hit.",
-        "outlet": "AFP", "region": "AMERICAS", "icon": "storm",
+        "deck": "Local officials count four dead, 162 hurt and 8,000 homes damaged as 114km/h winds hit.",
+        "outlet": "AFP", "region": "LATAM", "icon": "storm",
         "lat": -29.1, "lon": -54.0,
     },
     {
         "num": 8, "tab": "36 MISSING", "place": "CIKANDE, INDONESIA",
         "head": ["Fire kills three at a", "Java sweet factory"],
-        "deck": "Rescuers hunt smouldering sections for workers unaccounted for.",
-        "outlet": "AP, AFP", "region": "ASIA-PACIFIC", "icon": "factory",
+        "deck": "Fire officers say 36 are unaccounted for as rescuers search smouldering sections of the factory.",
+        "outlet": "AP, AFP", "region": "ASIA-PAC", "icon": "factory",
         "lat": -6.2, "lon": 106.3,
     },
     {
@@ -127,7 +151,7 @@ CARDS = [
     {
         "num": 10, "tab": "24 DEAD", "place": "BAYELSA, NIGERIA",
         "head": ["Mourners' boat capsizes", "on a Delta creek"],
-        "deck": "Twenty-four are rescued; police say the operator ignored pleas to turn back.",
+        "deck": "Twenty-four are rescued; police say the operator ignored pleas to turn back. President Ruto declared three days of mourning.",
         "outlet": "AP", "region": "AFRICA", "icon": "boat",
         "lat": 4.8, "lon": 6.0,
     },
@@ -142,7 +166,7 @@ CARDS = [
         "num": 12, "tab": "UNITY TALKS", "place": "JERUSALEM",
         "head": ["Eisenkot asks Likud in", "for coalition talks"],
         "deck": "Talks open on Sunday as he works to a December deadline for a majority.",
-        "outlet": "Straits Times", "region": "MIDDLE EAST", "icon": "table",
+        "outlet": "Straits Times", "region": "MIDEAST", "icon": "table",
         "lat": 31.8, "lon": 35.2,
     },
     {
@@ -156,25 +180,25 @@ CARDS = [
 
 # The one-line rail: place, headline, outlet, region.
 RAIL = [
-    ("SAUDI ARABIA", "Coalition downs a missile aimed at the west", "Reuters", "MIDDLE EAST"),
-    ("GAZA", "Death toll reaches 1,671, officials say", "Al Jazeera", "MIDDLE EAST"),
-    ("PAKISTAN", "Foreign minister hopeful of a US-Iran deal", "Arab News", "MIDDLE EAST"),
-    ("UNITED STATES", "Trump wants a 'permanent' Iran nuclear deal", "AFP", "AMERICAS"),
-    ("UNITED STATES", "SEC opens an accounting inquiry into Nvidia", "Bloomberg", "AMERICAS"),
-    ("UNITED STATES", "ICE arrests at a Seattle airport delay a flight", "AP", "AMERICAS"),
-    ("CANADA", "Defence chief sees no change in US military ties", "Reuters", "AMERICAS"),
-    ("HONDURAS", "Swimmer crosses a strait as a tanker burns", "BBC", "AMERICAS"),
+    ("SAUDI ARABIA", "Coalition downs a missile aimed at the west", "Reuters", "MIDEAST"),
+    ("GAZA", "Death toll reaches 1,671, officials say", "Al Jazeera", "MIDEAST"),
+    ("PAKISTAN", "Foreign minister hopeful of a US-Iran deal", "Arab News", "S. ASIA"),
+    ("UNITED STATES", "Trump wants a 'permanent' Iran nuclear deal", "AFP", "N. AMER."),
+    ("UNITED STATES", "SEC opens an accounting inquiry into Nvidia", "Bloomberg", "N. AMER."),
+    ("UNITED STATES", "ICE arrests at a Seattle airport delay a flight", "AP", "N. AMER."),
+    ("CANADA", "Defence chief sees no change in US military ties", "Reuters", "N. AMER."),
+    ("HONDURAS", "Swimmer crosses a strait as a tanker burns", "BBC", "LATAM"),
     ("FRANCE", "Sixth weekend of marches over living costs", "AFP", "EUROPE"),
     ("GERMANY", "IG Metall widens car and shipyard strikes", "Reuters", "EUROPE"),
     ("PORTUGAL", "Thousands march in Lisbon on living costs", "Reuters", "EUROPE"),
     ("DENMARK", "Russian attaché expelled over an alleged plot", "Guardian", "EUROPE"),
-    ("MOLDOVA", "Reports a Russian breach of its airspace", "Kyiv Ind.", "EUROPE"),
-    ("POLAND", "NATO will defend 'every inch', Rutte says", "Reuters", "EUROPE"),
-    ("SOUTH KOREA", "Education chief quits in an AI cheating row", "AFP", "ASIA-PACIFIC"),
-    ("INDIA", "Delhi's air eases to an index of 236", "CPCB", "ASIA-PACIFIC"),
-    ("BANGLADESH", "Thirty party homes set alight in unrest", "TOI", "ASIA-PACIFIC"),
-    ("AUSTRALIA", "Fred Nile, former NSW MP, dies at 92", "ABC", "ASIA-PACIFIC"),
-    ("INDONESIA", "EU signs a trade pact after ten years of talks", "DW", "ASIA-PACIFIC"),
+    ("MOLDOVA", "Reports a Russian breach of its airspace", "Kyiv Ind.", "E. EUROPE"),
+    ("POLAND", "NATO will defend 'every inch', Rutte says", "Reuters", "E. EUROPE"),
+    ("SOUTH KOREA", "Education chief quits in an AI cheating row", "AFP", "ASIA-PAC"),
+    ("INDIA", "Delhi's air eases to an index of 236", "CPCB", "S. ASIA"),
+    ("BANGLADESH", "Thirty party homes set alight in unrest", "TOI", "S. ASIA"),
+    ("AUSTRALIA", "Fred Nile, former NSW MP, dies at 92", "ABC", "ASIA-PAC"),
+    ("INDONESIA", "EU signs a trade pact after ten years of talks", "DW", "ASIA-PAC"),
     ("SUDAN", "UN counts 2,230 civilian deaths this year", "UN OHCHR", "AFRICA"),
     ("KENYA", "El Nino rain puts 1.5 million people at risk", "Met Dept", "AFRICA"),
     ("ENGLAND", "Five tries as England beat NZ 37-12", "AP", "WORLD"),

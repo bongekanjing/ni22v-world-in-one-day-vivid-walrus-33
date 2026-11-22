@@ -189,7 +189,7 @@ def region_block(draw, y):
 
 def lead_row(draw, y, height):
     """Three illustrated leads, unequal widths, headline above the artwork."""
-    widths = [0.394, 0.290, 0.284]
+    widths = [0.34, 0.33, 0.33]
     gap = 11
     avail = MEASURE - gap * 2
     x = MARGIN
